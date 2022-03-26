@@ -1,6 +1,6 @@
 package kz.edu.astanait.usertest.utils.facade;
 
-import kz.edu.astanait.usertest.dto.UserDtoRequest;
+import kz.edu.astanait.usertest.dto.request.UserDtoRequest;
 import kz.edu.astanait.usertest.model.User;
 
 public class UserFacade {
@@ -13,9 +13,9 @@ public class UserFacade {
         response.setSurname(request.getSurname());
         response.setMiddlename(request.getMiddlename());
         response.setSex(request.getSex());
-        response.setIp(request.getIp());
+        response.setCountry(request.getCountry());
         response.setEmail(request.getEmail());
-        response.setPhoneNumber(request.getPhone_number());
+        response.setPhoneNumber(request.getPhoneNumber());
         return response;
     }
 }

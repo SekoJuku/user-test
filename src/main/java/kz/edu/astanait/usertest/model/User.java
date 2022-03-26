@@ -20,5 +20,21 @@ public class User {
     private String sex;
     private String phoneNumber;
     private String email;
-    private String ip;
+    @ManyToOne(targetEntity = Country.class, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "country_id", referencedColumnName = "id")
+    private Country country;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", middlename='" + middlename + '\'' +
+                ", sex='" + sex + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", country='" + country + '\'' +
+                '}';
+    }
 }

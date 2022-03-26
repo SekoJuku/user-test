@@ -1,8 +1,8 @@
 package kz.edu.astanait.usertest;
 
-import kz.edu.astanait.usertest.dto.UserDtoRequest;
 import kz.edu.astanait.usertest.model.User;
 import kz.edu.astanait.usertest.repository.UserRepository;
+import kz.edu.astanait.usertest.service.UserService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -28,9 +27,12 @@ class UserTestApplicationTests {
 
     @Autowired private UserRepository userRepository;
 
+    @Autowired private UserService userService;
+
     @Test
     void contextLoads() {
         Assertions.assertThat(userRepository).isNotNull();
+        Assertions.assertThat(userService).isNotNull();
     }
 
     @Test
@@ -41,16 +43,15 @@ class UserTestApplicationTests {
         user.setMiddlename("Azamatovich");
         user.setSex("Male");
         user.setEmail("apocalypsys7777@gmail.com");
-        user.setIp("192.168.1.1");
         user.setPhoneNumber("87777777777");
-        User newUser = userRepository.save(user);
+        User newUser = userService.create(user);
         assertEquals(user.getName(),newUser.getName());
         userRepository.delete(newUser);
     }
 
     @Test
     public void findUserByIdTest() {
-        User user = userRepository.getById(1L);
+        User user = userService.getById(1L);
         assertEquals(user.getId(), 1L);
     }
 
