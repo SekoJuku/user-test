@@ -1,6 +1,9 @@
 package kz.edu.astanait.usertest.dto.request;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import kz.edu.astanait.usertest.model.Country;
 import lombok.Data;
 
@@ -11,6 +14,7 @@ public class UserDtoRequest {
     private String surname;
     private String middlename;
     private String sex;
+    @JsonProperty("phone_number")
     private String phoneNumber;
     private String email;
     private Country country;

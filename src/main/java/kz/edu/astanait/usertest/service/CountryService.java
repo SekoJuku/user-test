@@ -25,6 +25,7 @@ public class CountryService {
     }
 
     public Country add(String countryName) {
+        log.info("Country pre-save");
         return countryRepository.save(new Country(countryName));
     }
 }

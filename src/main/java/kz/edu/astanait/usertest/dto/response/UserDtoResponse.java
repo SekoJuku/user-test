@@ -1,5 +1,6 @@
 package kz.edu.astanait.usertest.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
@@ -9,7 +10,8 @@ public class UserDtoResponse {
     private String surname;
     private String middlename;
     private String sex;
-    private String phoneNumber; // Here it doesn't work if I name it phoneNumber, even though i've used it many times
+    @JsonProperty("phone_number") // doesn't work
+    private String phoneNumber;
     private String email;
     private String ip;
 }

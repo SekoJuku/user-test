@@ -1,6 +1,6 @@
 package kz.edu.astanait.usertest.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 
 
@@ -8,5 +8,6 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GetIpDtoRequest {
     private String ip;
-    private String country_name;
+    @JsonProperty("country_name")
+    private String countryName;
 }

@@ -39,6 +39,6 @@ public class HttpUtils {
                 .map(h -> h.split(",")[0])
                 .reduce("", (h1, h2) -> h1 + ":" + h2);
         GetIpDtoRequest request1 =restTemplate.getForObject("https://ipapi.co/"+ ip + "/json/",GetIpDtoRequest.class);
-        return request1 != null ? request1.getCountry_name() : "Undefined";
+        return request1 != null ? request1.getCountryName() : "Undefined";
     }
 }
