@@ -1,6 +1,8 @@
-package kz.edu.astanait.usertest;
+/*package kz.edu.astanait.usertest;
 
 import kz.edu.astanait.usertest.model.Country;
+import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +11,8 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class ApiTest {
-    public static void main(String[] args) throws IOException {
+    @Test
+    public void rawIpTest() throws IOException {
         URL ipApi = new URL("https://ipapi.co/147.30.70.34/json/");
 
         URLConnection c = ipApi.openConnection();
@@ -18,8 +21,12 @@ public class ApiTest {
                 new InputStreamReader(c.getInputStream())
         );
         Country country = new Country();
+
         String countryName = reader.readLine();
-        country.setName(reader.readLine());
         System.out.println(countryName);
+        System.out.println(reader.readLine());
+        country.setName(countryName);
+        Assertions.assertEquals("Kazakhstan", country.getName());
     }
 }
+*/

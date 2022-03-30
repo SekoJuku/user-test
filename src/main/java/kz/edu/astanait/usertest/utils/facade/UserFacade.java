@@ -18,4 +18,16 @@ public class UserFacade {
         response.setPhoneNumber(request.getPhoneNumber());
         return response;
     }
+    public static User createTestUser() {
+        return new User(
+                null,
+                "Serikzhan",
+                "Kuanyshev",
+                "Azamatovich",
+                "Male",
+                "7477777777",
+                "serikzhan@serik.com",
+                null
+        );
+    }
 }

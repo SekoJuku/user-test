@@ -33,6 +33,7 @@ class UserTestApplicationTests {
     void contextLoads() {
         Assertions.assertThat(userRepository).isNotNull();
         Assertions.assertThat(userService).isNotNull();
+        Assertions.assertThat(mockMvc).isNotNull();
     }
 
     @Test
@@ -46,19 +47,8 @@ class UserTestApplicationTests {
         user.setPhoneNumber("87777777777");
         User newUser = userService.create(user);
         assertEquals(user.getName(),newUser.getName());
+        assertEquals(user.getEmail(), newUser.getEmail());
         userRepository.delete(newUser);
     }
 
-    @Test
-    public void findUserByIdTest() {
-        User user = userService.getById(1L);
-        assertEquals(user.getId(), 1L);
-    }
-
-    @Test
-    public void getIpTest() throws Exception {
-        mockMvc.perform(get("/api/user/ip"))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
 }
