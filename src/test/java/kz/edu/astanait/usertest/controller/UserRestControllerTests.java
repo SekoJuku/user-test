@@ -23,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
 public class UserRestControllerTests {
+
     private final String apiPrefix = "/api/user";
 
     @Autowired MockMvc mvc;
