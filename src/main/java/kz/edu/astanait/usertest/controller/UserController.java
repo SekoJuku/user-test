@@ -6,11 +6,7 @@ import kz.edu.astanait.usertest.service.UserService;
 import kz.edu.astanait.usertest.utils.facade.UserFacade;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
-import org.apache.tomcat.jni.Time;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 @RestController
 @AllArgsConstructor
@@ -28,14 +24,14 @@ public class UserController {
     @PostMapping("")
     public User create(@RequestBody UserDtoRequest userDtoRequest) {
         log.info("POST:create( " + userDtoRequest.toString()+ ")");
-        return userService.create(UserFacade.UserDtoToUser(userDtoRequest));
+        return userService.create(UserFacade.userDtoToUser(userDtoRequest));
     }
 
     @PutMapping("/{id}")
     public User edit(@PathVariable Long id, @RequestBody UserDtoRequest userDtoRequest) {
         log.info("PUT:edit(" + id+ ", " + userDtoRequest.toString()+ ")");
         userDtoRequest.setId(id);
-        return userService.edit(UserFacade.UserDtoToUser(userDtoRequest));
+        return userService.edit(UserFacade.userDtoToUser(userDtoRequest));
     }
     @DeleteMapping("/{id}")
     public String delete(@PathVariable Long id) {

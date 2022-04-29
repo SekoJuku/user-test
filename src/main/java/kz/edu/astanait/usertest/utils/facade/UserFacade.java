@@ -1,10 +1,11 @@
 package kz.edu.astanait.usertest.utils.facade;
 
 import kz.edu.astanait.usertest.dto.request.UserDtoRequest;
+import kz.edu.astanait.usertest.model.Country;
 import kz.edu.astanait.usertest.model.User;
 
 public class UserFacade {
-    public static User UserDtoToUser(UserDtoRequest request) {
+    public static User userDtoToUser(UserDtoRequest request) {
         User response = new User();
         if (request.getId() != null) {
             response.setId(request.getId());

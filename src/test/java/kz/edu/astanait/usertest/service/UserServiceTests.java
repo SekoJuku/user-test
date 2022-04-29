@@ -12,5 +12,4 @@ public class UserServiceTests {
     @Mock
     private UserRepository userRepository;
 
-
 }

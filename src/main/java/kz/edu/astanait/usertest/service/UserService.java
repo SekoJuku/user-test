@@ -42,7 +42,9 @@ public class UserService {
             country = countryService.add(countryName);
         user.setCountry(country);
         log.info("User pre-save");
-        return userRepository.save(user);
+        User newUser = userRepository.save(user);
+        log.info("User post-save : " + newUser);
+        return newUser;
     }
 
     public User edit(User user) {
