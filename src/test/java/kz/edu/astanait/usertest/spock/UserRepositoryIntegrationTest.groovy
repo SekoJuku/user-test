@@ -34,6 +34,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 
@@ -98,13 +99,18 @@ class UserRepositoryIntegrationTest extends Specification {
     void "create user should send back user and OK status"() {
         given:
             User user = UserFacade.createTestUser()
-            restTemplate.getForObject(_, _) >> new GetIpDtoRequest("192.168.1.1", "Kazakhstan")
+            restTemplate.getForObject(_ as URI, _ as Class<Object>) >> new GetIpDtoRequest("192.168.1.1", "Kazakhstan")
         expect:
             mvc.perform(post("/api/user")
                 .content(getUserInJson(user))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("\$.name").value(user.getName()))
+                .andExpect(jsonPath("\$.surname").value(user.getSurname()))
+                .andExpect(jsonPath("\$.middlename").value(user.getMiddlename()))
+                .andExpect(jsonPath("\$.sex").value(user.getSex()))
+
     }
     @Test
     void "edit user should send back user and Ok status"() {
@@ -117,6 +123,7 @@ class UserRepositoryIntegrationTest extends Specification {
                 .contentType("application/json"))
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("\$.id").value(user.getId()))
     }
 
     private static String getUserInJson(User user) throws JsonProcessingException {

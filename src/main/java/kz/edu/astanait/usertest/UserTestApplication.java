@@ -1,5 +1,7 @@
 package kz.edu.astanait.usertest;
 
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -18,7 +20,6 @@ public class UserTestApplication {
     #TODO: [+] Logger added but not used
     #TODO: [?] Add unit test for UserService
      */
-
 
     public static void main(String[] args) {
         SpringApplication.run(UserTestApplication.class, args);
