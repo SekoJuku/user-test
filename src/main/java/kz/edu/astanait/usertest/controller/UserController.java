@@ -1,5 +1,6 @@
 package kz.edu.astanait.usertest.controller;
 
+import kz.edu.astanait.usertest.annotation.Metric;
 import kz.edu.astanait.usertest.dto.request.UserDtoRequest;
 import kz.edu.astanait.usertest.model.User;
 import kz.edu.astanait.usertest.service.UserService;
@@ -16,6 +17,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{id}")
+    @Metric(name = "method.getById")
     public User getById(@PathVariable Long id) {
         log.info("GET:getById(" + id+ ")");
         return userService.getById(id);
