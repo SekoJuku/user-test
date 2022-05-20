@@ -26,12 +26,9 @@ public class HttpUtils {
             "REMOTE_ADDR"
     };
 
-    public static String getIP(RestTemplate restTemplate, RequestAttributes requestAttributes)
-    {
+    public static String getIP(RestTemplate restTemplate, RequestAttributes requestAttributes) {
         if (requestAttributes == null)
-        {
             return "Undefined";
-        }
         HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
         String ip = Arrays.stream(IP_HEADER_NAMES)
                 .map(request::getHeader)

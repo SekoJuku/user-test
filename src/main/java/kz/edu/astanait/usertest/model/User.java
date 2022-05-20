@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
 @Data
 @Entity
@@ -27,6 +28,8 @@ public class User {
     @ManyToOne(targetEntity = Country.class, cascade = CascadeType.DETACH)
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     private Country country;
+    @Column(name = "image", length = 100000)
+    private byte[] image;
 
     @Override
     public String toString() {
@@ -39,6 +42,7 @@ public class User {
                 ", phoneNumber=\"" + phoneNumber + "\"" +
                 ", email=\"" + email + "\"" +
                 ", country=" + country +
+                ", image=" + Arrays.toString(image) +
                 "}";
     }
 }

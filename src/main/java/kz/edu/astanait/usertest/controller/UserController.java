@@ -7,6 +7,7 @@ import kz.edu.astanait.usertest.service.UserService;
 import kz.edu.astanait.usertest.utils.facade.UserFacade;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,15 +24,20 @@ public class UserController {
         return userService.getById(id);
     }
 
+    @GetMapping("/image/{id}")
+    public byte[] getImageByUserId(@PathVariable Long id) {
+        return userService.getImageByUserId(id);
+    }
+
     @PostMapping("")
-    public User create(@RequestBody UserDtoRequest userDtoRequest) {
-        log.info("POST:create( " + userDtoRequest.toString()+ ")");
+    public User create(@ModelAttribute UserDtoRequest userDtoRequest) {
+        log.info("POST:create( " + userDtoRequest+ ")");
         return userService.create(UserFacade.userDtoToUser(userDtoRequest));
     }
 
     @PutMapping("/{id}")
-    public User edit(@PathVariable Long id, @RequestBody UserDtoRequest userDtoRequest) {
-        log.info("PUT:edit(" + id+ ", " + userDtoRequest.toString()+ ")");
+    public User edit(@PathVariable Long id, @ModelAttribute UserDtoRequest userDtoRequest) {
+        log.info("PUT:edit(" + id+ ", " + userDtoRequest+ ")");
         userDtoRequest.setId(id);
         return userService.edit(UserFacade.userDtoToUser(userDtoRequest));
     }

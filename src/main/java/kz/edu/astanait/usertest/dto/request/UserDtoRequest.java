@@ -1,11 +1,10 @@
 package kz.edu.astanait.usertest.dto.request;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 import kz.edu.astanait.usertest.model.Country;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class UserDtoRequest {
@@ -18,6 +17,7 @@ public class UserDtoRequest {
     private String phoneNumber;
     private String email;
     private Country country;
+    private MultipartFile image;
 
     @Override
     public String toString() {
