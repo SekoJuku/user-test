@@ -6,8 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.Arrays;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Data
 @Entity
@@ -25,11 +32,10 @@ public class User {
     @JsonProperty("phone_number")
     private String phoneNumber;
     private String email;
+    private String password;// mb char[]
     @ManyToOne(targetEntity = Country.class, cascade = CascadeType.DETACH)
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     private Country country;
-    @Column(name = "image", length = 100000)
-    private byte[] image;
 
     @Override
     public String toString() {
@@ -42,7 +48,6 @@ public class User {
                 ", phoneNumber=\"" + phoneNumber + "\"" +
                 ", email=\"" + email + "\"" +
                 ", country=" + country +
-                ", image=" + Arrays.toString(image) +
                 "}";
     }
 }

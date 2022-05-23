@@ -1,5 +1,5 @@
 INSERT INTO countries(name) VALUES ('Undefined');
-INSERT INTO users (name, surname, middlename, sex, phone_number, email, country_id)
+INSERT INTO users (name, surname, middlename, sex, phone_number, email, country_id, password)
 VALUES (
          'Serikzhan',
          'Kuanyshev',
@@ -7,5 +7,6 @@ VALUES (
          'Male',
          '87777777777',
          'email@mail.ru',
-         1
+         1,
+        '123'
 );

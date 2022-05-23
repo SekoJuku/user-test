@@ -2,9 +2,12 @@ package kz.edu.astanait.usertest.utils.facade;
 
 import kz.edu.astanait.usertest.dto.request.UserDtoRequest;
 import kz.edu.astanait.usertest.model.Country;
+import kz.edu.astanait.usertest.model.Image;
 import kz.edu.astanait.usertest.model.User;
 import kz.edu.astanait.usertest.utils.ImageUtils;
 import lombok.SneakyThrows;
+
+import java.util.Objects;
 
 public class UserFacade {
     @SneakyThrows
@@ -20,7 +23,6 @@ public class UserFacade {
         response.setCountry(request.getCountry());
         response.setEmail(request.getEmail());
         response.setPhoneNumber(request.getPhoneNumber());
-        response.setImage(ImageUtils.compressImage(request.getImage().getBytes()));
         return response;
     }
     public static User createTestUser() {
@@ -32,7 +34,7 @@ public class UserFacade {
                 "Male",
                 "7477777777",
                 "serikzhan@serik.com",
-                null,
+                "123",
                 null
         );
     }
