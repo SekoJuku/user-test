@@ -36,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 
 
 @SpringBootTest
@@ -102,6 +103,7 @@ class UserRepositoryIntegrationTest extends Specification {
             restTemplate.getForObject(_ as URI, _ as Class<Object>) >> new GetIpDtoRequest("192.168.1.1", "Kazakhstan")
         expect:
             mvc.perform(post("/api/user")
+                .with(httpBasic("admin@admin.com", "123"))
                 .content(getUserInJson(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -119,6 +121,7 @@ class UserRepositoryIntegrationTest extends Specification {
             user.setId(1L)
         expect:
             mvc.perform(put("/api/user" + "/" + user.getId())
+                .with(httpBasic("admin@admin.com", "123"))
                 .content(getUserInJson(user))
                 .contentType("application/json"))
                 .andDo(print())

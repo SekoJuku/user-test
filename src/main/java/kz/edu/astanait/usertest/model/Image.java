@@ -26,6 +26,12 @@ public class Image {
 
     private byte[] data;
 
-    private Long userId;
-
+    @Override
+    public String toString() {
+        return "Image {" +
+            "id: " + id + "," +
+            "name: " + name + "," +
+            "extension: " + extension + "," +
+            "contentType: " + contentType + "}";
+    }
 }

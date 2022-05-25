@@ -17,6 +17,14 @@ public class Country {
     @Column(unique = true)
     private String name;
 
+    @Override
+    public String toString() {
+        return "Country{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            '}';
+    }
+
     public Country(String name) {
         this.setName(name);
     }

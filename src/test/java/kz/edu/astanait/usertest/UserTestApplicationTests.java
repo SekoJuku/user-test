@@ -1,8 +1,11 @@
 package kz.edu.astanait.usertest;
 
+import kz.edu.astanait.usertest.dto.request.UserDtoRequest;
 import kz.edu.astanait.usertest.model.User;
+import kz.edu.astanait.usertest.repository.RoleRepository;
 import kz.edu.astanait.usertest.repository.UserRepository;
 import kz.edu.astanait.usertest.service.UserService;
+import kz.edu.astanait.usertest.utils.facade.UserFacade;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +32,7 @@ class UserTestApplicationTests {
 
     @Autowired private UserService userService;
 
+
     @Test
     void contextLoads() {
         Assertions.assertThat(userRepository).isNotNull();
@@ -38,16 +42,11 @@ class UserTestApplicationTests {
 
     @Test
     public void createUserTest() throws Exception {
-        User user = new User();
-        user.setName("Serikzhan");
-        user.setSurname("Kuanyshev");
-        user.setMiddlename("Azamatovich");
-        user.setSex("Male");
-        user.setEmail("apocalypsys7777@gmail.com");
-        user.setPhoneNumber("87777777777");
-        User newUser = userService.create(user);
-        assertEquals(user.getName(),newUser.getName());
-        assertEquals(user.getEmail(), newUser.getEmail());
+        UserDtoRequest request = UserFacade.UserToDtoRequest(UserFacade.createTestUser());
+        request.setRoleId(userService.getRoleById(1L).getId());
+        User newUser = userService.create(request);
+        assertEquals(request.getName(),newUser.getName());
+        assertEquals(request.getEmail(), newUser.getEmail());
         userRepository.delete(newUser);
     }
 

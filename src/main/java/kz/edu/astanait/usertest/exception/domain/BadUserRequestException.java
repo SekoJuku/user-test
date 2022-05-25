@@ -1,4 +1,4 @@
-package kz.edu.astanait.usertest.exception;
+package kz.edu.astanait.usertest.exception.domain;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
