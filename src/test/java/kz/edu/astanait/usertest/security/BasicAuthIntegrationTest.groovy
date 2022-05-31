@@ -1,45 +1,33 @@
 package kz.edu.astanait.usertest.security
 
-import com.fasterxml.jackson.core.JsonProcessingException
+
 import com.fasterxml.jackson.databind.ObjectMapper
-import kz.edu.astanait.usertest.controller.UserController
 import kz.edu.astanait.usertest.dto.request.GetIpDtoRequest
 import kz.edu.astanait.usertest.dto.request.UserDtoRequest
 import kz.edu.astanait.usertest.model.Role
 import kz.edu.astanait.usertest.model.User
 import kz.edu.astanait.usertest.repository.CountryRepository
 import kz.edu.astanait.usertest.repository.UserRepository
-import kz.edu.astanait.usertest.service.UserService
 import kz.edu.astanait.usertest.utils.facade.UserFacade
-import lombok.extern.slf4j.Slf4j
 import org.junit.ClassRule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.test.util.TestPropertyValues
 import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext
-import org.springframework.context.annotation.Bean
-import org.springframework.core.io.DefaultResourceLoader
 import org.springframework.http.MediaType
 import org.springframework.mock.web.MockMultipartFile
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.ResultActions
-import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder
 import org.springframework.web.client.RestTemplate
-import org.springframework.web.multipart.commons.CommonsMultipartResolver
 import org.testcontainers.containers.PostgreSQLContainer
 import spock.lang.Specification
-
-import javax.servlet.http.Part
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
@@ -97,7 +85,7 @@ class BasicAuthIntegrationTest extends Specification {
         given:
             User testUser = UserFacade.createTestUser()
             testUser.setRole(new Role(1L,"ROLE_ANONYM")) // glupo
-            UserDtoRequest request = UserFacade.UserToDtoRequest(testUser)
+            UserDtoRequest request = UserFacade.userToDtoRequest(testUser)
             restTemplate.getForObject(_ as URI, _ as Class<Object>) >> new GetIpDtoRequest("192.168.1.1", "Kazakhstan")
         expect:
             mvc.perform(post("/api/user")
@@ -113,7 +101,7 @@ class BasicAuthIntegrationTest extends Specification {
         given:
             User testUser = UserFacade.createTestUser()
             testUser.setRole(new Role(1L,"ROLE_ANONYM")) // glupo
-            UserDtoRequest request = UserFacade.UserToDtoRequest(testUser)
+            UserDtoRequest request = UserFacade.userToDtoRequest(testUser)
             MockMultipartFile file = new MockMultipartFile(
                 "file",
                 "test.png",
@@ -146,7 +134,7 @@ class BasicAuthIntegrationTest extends Specification {
             User user = UserFacade.createTestUser()
             user.setEmail("sultan@gmail.com")
             user.setRole(new Role(1L,"ROLE_ANONYM"))
-            UserDtoRequest request = UserFacade.UserToDtoRequest(user)
+            UserDtoRequest request = UserFacade.userToDtoRequest(user)
             MockMultipartFile file = new MockMultipartFile(
                 "file",
                 "test.png",

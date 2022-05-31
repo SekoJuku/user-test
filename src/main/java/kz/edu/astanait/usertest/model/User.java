@@ -3,6 +3,7 @@ package kz.edu.astanait.usertest.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,6 +32,7 @@ import java.util.List;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name = "users")
+@Builder
 public class User implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) // имя, фамилия, отчество, пол, номер телефона, email
     private Long id;
