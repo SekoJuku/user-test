@@ -7,6 +7,9 @@ import kz.edu.astanait.usertest.model.User;
 import kz.edu.astanait.usertest.utils.ImageUtils;
 import lombok.SneakyThrows;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class UserFacade {
@@ -26,7 +29,7 @@ public class UserFacade {
         response.setPassword(request.getPassword());
         return response;
     }
-    public static UserDtoRequest UserToDtoRequest(User user) {
+    public static UserDtoRequest userToDtoRequest(User user) {
         UserDtoRequest response = UserDtoRequest.builder()
             .name(user.getName())
             .surname(user.getSurname())
@@ -56,5 +59,45 @@ public class UserFacade {
                 null,
                 null
         );
+    }
+    @SneakyThrows
+    public static User parseResultSetToUser(ResultSet resultSet, String prefix){
+        Long id = resultSet.getLong(prefix+(!prefix.equals("")?".":"")+"id");
+        String name = resultSet.getString(prefix+(!prefix.equals("")?".":"")+"name");
+        String surname = resultSet.getString("surname");
+        String middlename = resultSet.getString("middlename");
+        String sex = resultSet.getString("sex");
+        String phoneNumber = resultSet.getString("phone_number");
+        String email = resultSet.getString("email");
+        String password = resultSet.getString("password");
+        return User.builder()
+            .id(id)
+            .name(name)
+            .surname(surname)
+            .middlename(middlename)
+            .phoneNumber(phoneNumber)
+            .sex(sex)
+            .email(email)
+            .password(password)
+            .build();
+    }
+
+    public static void parseUserValuesToStatement(
+        User user,
+        Long countryId,
+        Long roleId,
+        Long imageId,
+        PreparedStatement preparedStatement
+    ) throws SQLException {
+        preparedStatement.setString(1, user.getEmail());
+        preparedStatement.setString(2, user.getMiddlename());
+        preparedStatement.setString(3, user.getName());
+        preparedStatement.setString(4, user.getPassword());
+        preparedStatement.setString(5, user.getPhoneNumber());
+        preparedStatement.setString(6, user.getSex());
+        preparedStatement.setString(7, user.getSurname());
+        preparedStatement.setLong(8, countryId);
+        preparedStatement.setLong(9, roleId);
+        preparedStatement.setLong(10, imageId);
     }
 }

@@ -9,7 +9,6 @@ import kz.edu.astanait.usertest.model.User
 import kz.edu.astanait.usertest.repository.CountryRepository
 import kz.edu.astanait.usertest.repository.H2TestProfileJPAConfig
 import kz.edu.astanait.usertest.repository.UserRepository
-import kz.edu.astanait.usertest.service.CountryService
 import kz.edu.astanait.usertest.utils.facade.UserFacade
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired

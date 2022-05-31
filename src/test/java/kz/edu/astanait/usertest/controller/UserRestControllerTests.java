@@ -9,7 +9,6 @@ import kz.edu.astanait.usertest.service.UserService;
 import kz.edu.astanait.usertest.utils.facade.UserFacade;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -18,12 +17,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestTemplate;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static kz.edu.astanait.usertest.utils.facade.UserFacade.createTestUser;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
@@ -49,7 +51,7 @@ public class UserRestControllerTests {
     @Test
     public void createUserAPITest() throws Exception {
         User user = createTestUser();
-        UserDtoRequest request = UserFacade.UserToDtoRequest(user);
+        UserDtoRequest request = UserFacade.userToDtoRequest(user);
 
 
         given(userService.create(request)).willReturn(user);
@@ -85,7 +87,7 @@ public class UserRestControllerTests {
     public void editUserAPITest() throws Exception {
         User user = createTestUser();
         user.setId(1L);
-        UserDtoRequest request = UserFacade.UserToDtoRequest(user);
+        UserDtoRequest request = UserFacade.userToDtoRequest(user);
 
         given(userService.edit(request)).willReturn(user);
         given(userService.getRoleById(1L)).willReturn(new Role(1L,"ROLE_ANONYM"));

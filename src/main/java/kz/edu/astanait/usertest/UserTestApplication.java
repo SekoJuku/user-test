@@ -1,5 +1,6 @@
 package kz.edu.astanait.usertest;
 
+import kz.edu.astanait.usertest.service.UserService;
 import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +16,9 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.servlet.MultipartConfigElement;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SpringBootApplication
 @EnableWebMvc
@@ -41,5 +45,11 @@ public class UserTestApplication {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+    @Bean
+    public Map<String, UserService> userServicesMap(List<UserService> userServices) {
+        Map<String, UserService> map = new HashMap<>();
+        userServices.forEach(userService -> map.put(userService.getName(), userService));
+        return map;
     }
 }
