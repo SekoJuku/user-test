@@ -7,9 +7,14 @@ import kz.edu.astanait.usertest.model.Image;
 import kz.edu.astanait.usertest.model.User;
 import kz.edu.astanait.usertest.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.experimental.FieldNameConstants;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,14 +34,15 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Log
 @RequestMapping("/api/user")
 public class UserController {
     private final ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
     private final Map<String, UserService> userServicesMap;
-    @Value("application.service.userService")
-    private final String name;
+    @Value("${userService}")
+    private String name;
 
     @GetMapping("/{id}")
     @Metric(name = "method.getById")
@@ -61,7 +67,7 @@ public class UserController {
         MediaType.MULTIPART_FORM_DATA_VALUE
     })
     public User create(@Validated @RequestParam("requestString") String requestString, @Nullable @RequestParam("file") MultipartFile file) {
-        log.info("POST:create( " + requestString + ")");
+        log.info("POST:create( " + requestString + ") " + name + userServicesMap.keySet() );
         UserDtoRequest request = objectMapper.readValue(requestString, UserDtoRequest.class);
         return findUserService(name).create(request, file);
     }

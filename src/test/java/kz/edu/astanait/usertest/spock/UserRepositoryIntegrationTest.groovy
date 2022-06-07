@@ -58,7 +58,6 @@ class UserRepositoryIntegrationTest extends Specification {
     @MockBean
     RestTemplate restTemplate
 
-
     @BeforeEach
     def setup() {
         Country country = countryRepository.save(new Country("Kazakhstan"))
@@ -94,6 +93,7 @@ class UserRepositoryIntegrationTest extends Specification {
             User newUser = userRepository.save(user)
         then:
             newUser.getId() != null
+            userRepository.delete(user)
     }
 
     @Test
@@ -112,6 +112,7 @@ class UserRepositoryIntegrationTest extends Specification {
                 .andExpect(jsonPath("\$.surname").value(user.getSurname()))
                 .andExpect(jsonPath("\$.middlename").value(user.getMiddlename()))
                 .andExpect(jsonPath("\$.sex").value(user.getSex()))
+                userRepository.delete(user)
 
     }
     @Test

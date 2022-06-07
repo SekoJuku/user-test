@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  app:
+    image: 'user-test:1.0.0-SNAPSHOT'
+    build:
+      context: ""
+    container_name: app
+    ports:
+      - 9090:9090
+    depends_on:
+      - postgredb
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgredb:5432/user-test
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123
+      - SERVER_PORT=9090
+    volumes:
+      - .m2:/root/.m2
+    stdin_open: true
+    tty: true
+
+  postgredb:
+    image: 'postgres:11.1'
+    container_name: postgresdb
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER:postgres
+      - POSTGRES_PASSWORD:123
+      - POSTGRES-DB:user-test
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/

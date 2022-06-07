@@ -6,6 +6,7 @@ import kz.edu.astanait.usertest.model.Image;
 import kz.edu.astanait.usertest.model.User;
 import kz.edu.astanait.usertest.utils.ImageUtils;
 import lombok.SneakyThrows;
+import org.springframework.lang.Nullable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,7 +40,7 @@ public class UserFacade {
             .email(user.getEmail())
             .password(user.getPassword())
             .phoneNumber(user.getPhoneNumber())
-            .roleId(user.getRole().getId())
+            .roleId(user.getRole() != null ?user.getRole().getId() : null)
             .build();
         if(user.getId() != null)
             response.setId(user.getId());

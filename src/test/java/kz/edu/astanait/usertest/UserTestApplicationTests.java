@@ -6,13 +6,21 @@ import kz.edu.astanait.usertest.repository.UserRepository;
 import kz.edu.astanait.usertest.service.UserService;
 import kz.edu.astanait.usertest.utils.facade.UserFacade;
 import org.assertj.core.api.Assertions;
+import org.junit.ClassRule;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.util.TestPropertyValues;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.containers.PostgreSQLContainer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,9 +31,12 @@ class UserTestApplicationTests {
 
     @Autowired private MockMvc mockMvc;
 
-    @Autowired private UserRepository userRepository;
+    @MockBean
+    private UserRepository userRepository;
 
-    @Autowired private UserService userService;
+    @Autowired
+    @Qualifier(value = "userServiceImpl")
+    private UserService userService;
 
 
     @Test
@@ -34,15 +45,4 @@ class UserTestApplicationTests {
         Assertions.assertThat(userService).isNotNull();
         Assertions.assertThat(mockMvc).isNotNull();
     }
-
-    @Test
-    public void createUserTest() throws Exception {
-        UserDtoRequest request = UserFacade.userToDtoRequest(UserFacade.createTestUser());
-        request.setRoleId(userService.getRoleById(1L).getId());
-        User newUser = userService.create(request);
-        assertEquals(request.getName(),newUser.getName());
-        assertEquals(request.getEmail(), newUser.getEmail());
-        userRepository.delete(newUser);
-    }
-
 }
